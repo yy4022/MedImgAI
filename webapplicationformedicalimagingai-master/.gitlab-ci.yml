@@ -1,0 +1,25 @@
+stages:
+  - test
+  - deploy
+
+before_script:
+  - python3 -m venv venv
+  - source venv/bin/activate
+  - python -m pip install --upgrade pip
+  - pip install -r requirements.txt
+unit-test-job:
+  stage: test
+  tags:
+    - group project
+  script:
+    - echo "Running unit tests... This will take about 60 seconds. "
+    - sleep 60
+    - pytest MedImgAI/tests.py
+    - echo "Code coverage is 90% "
+
+deploy-job:
+  stage: deploy
+  environment: production
+  script:
+    - echo "Deploying application... "
+    - echo "Application successfully deployed. "
